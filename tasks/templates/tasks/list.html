@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+
+<style>
+    body {
+        background-color: #ffc0cb; /* Soft pink */
+        font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+
+    .center-column {
+        width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffe6e6;
+        border-radius: 12px;
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 50px;
+        color: #ff69b4; /* Hot pink */
+        text-shadow: 3px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ff69b4;
+        border-radius: 10px;
+        font-size: 18px;
+    }
+
+    .item-row {
+        background-color: #ff99cc;
+        margin: 10px;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-info {
+        background-color: #ffb3de;
+        border-color: #ff69b4;
+        font-size: 16px;
+    }
+
+    .btn-danger {
+        background-color: #ff6f61;
+        border-color: #e45d55;
+    }
+</style>
+
+<div class="center-column">
+    <h1> To-Do </h1>
+    <form method="POST" action="/">
+        {% csrf_token %}
+        {{form.title}}
+        <input class="btn btn-info" type="submit" name="Create Task">
+    </form>
+
+    <div class="todo-list">
+        {% for task in tasks %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+                {% if task.complete == True %}
+                <strike>{{task}}</strike>
+                {% else %}
+                <span>{{task}}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
